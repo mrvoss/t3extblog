@@ -164,7 +164,7 @@ class Post extends AbstractLocalizedEntity {
 	/**
 	 * subscriptions
 	 *
-	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\T3extblog\Domain\Model\Subscriber>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\T3extblog\Domain\Model\PostSubscriber>
 	 * @lazy
 	 */
 	protected $subscriptions;
@@ -737,7 +737,7 @@ class Post extends AbstractLocalizedEntity {
 	/**
 	 * Returns the subscriptions
 	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\T3extblog\Domain\Model\Subscriber> $subscriptions
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\T3extblog\Domain\Model\PostSubscriber> $subscriptions
 	 */
 	public function getSubscriptions() {
 		return $this->subscriptions;
@@ -746,7 +746,7 @@ class Post extends AbstractLocalizedEntity {
 	/**
 	 * Sets the subscriptions
 	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\T3extblog\Domain\Model\Subscriber> $subscriptions
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\T3extblog\Domain\Model\PostSubscriber> $subscriptions
 	 *
 	 * @return void
 	 */
