@@ -18,10 +18,71 @@ Upgrade Guide
 		:depth: 3
 
 
+Upgrade from 2.0.x to 2.1.0
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This release has been sponsored by *Elementare Teilchen* (http://www.elementare-teilchen.de).
+
+
+Changelog
+"""""""""
+
+https://github.com/fnagel/t3extblog/compare/2.0.0...2.1.0
+
+- New major feature: Subscribe for new posts
+
+- Configure email template files with TypoScript
+
+- Some minor bugfixes and improvements
+
+- Documentation improvements
+
+
+**Subscribe for new posts**
+
+- New plugin with simple subscription form (SPAM protected)
+
+- Opt-in email for new subscriber
+
+- Subscription management within the known subscription manager plugin
+
+- Configuration for email templates
+
+See :ref:`Users Manual <users-manual-notifications>` and
+:ref:`Administration manual <administration-subscription-manager>` for more information.
+
+
+**Breaking changes**
+
+- Subscription manager TypoScript has changed:
+	-  `subscriptionManager.admin` and `subscriptionManager.subscriber` moved to `subscriptionManager.comment.*`
+	-  `subscriptionManager.admin.enable` changed to `subscriptionManager.admin.enableNotifications`
+	-  `subscriptionManager.subscriber.enableNewCommentNotifications` changed to `subscriptionManager.subscriber.enableNotifications`
+
+- Quite some localization keys have changed (mostly `subscriber` and `flashMessage.subscriber` related)
+
+- Some templates have changed (e.g. changed link parameter in email templates, SPAM check partial, ...)
+
+- RealUrl configuration has been extended
+
+- Massive code refactoring (so in case you extended t3extblog, make sure to adjust your changes if needed)
+
+Please make sure to adapt these changes in your TS, templates and overwrites.
+
+
+How to upgrade
+""""""""""""""
+
+#. "Clear all cache" in Install Tool
+
+#. Create new DB fields by using "Compare current database with specification" in Install Tool
+
+#. Adjust and update TypoScript configuration, templates and localization overwrites
+
+
 
 Upgrade from 1.2.x to 2.0.0
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 
 Changelog
 """""""""
@@ -75,10 +136,8 @@ How to upgrade
 #. Adjust and update all templates!
 
 
-
 Upgrade from 1.1.x to 1.2.x
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 
 Changelog
 """""""""
