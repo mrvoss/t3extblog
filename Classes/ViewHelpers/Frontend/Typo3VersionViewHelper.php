@@ -33,15 +33,13 @@ use TYPO3\T3extblog\ViewHelpers\AbstractConditionViewHelper;
 class Typo3VersionViewHelper extends AbstractConditionViewHelper {
 
 	/**
-	 * Render children if version matches
-	 *
-	 * @param string $version
-	 * @param string $operator
-	 *
-	 * @return string
+	 * @inheritdoc
 	 */
-	public function render($version = '6.2', $operator = '>') {
-		return parent::render();
+	public function initializeArguments() {
+		parent::initializeArguments();
+
+		$this->registerArgument('version', 'string', 'Version to match', TRUE, '6.2');
+		$this->registerArgument('operator', 'string', 'Compare oprtator', TRUE, '>');
 	}
 
 	/**

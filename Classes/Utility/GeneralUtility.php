@@ -26,9 +26,9 @@ namespace TYPO3\T3extblog\Utility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\TimeTracker\TimeTracker;
 use \TYPO3\CMS\Core\Utility\GeneralUtility as CoreGeneralUtility;
 use TYPO3\CMS\Frontend\Utility\EidUtility;
+use TYPO3\CMS\Core\TimeTracker\TimeTracker;
 
 /**
  * General utility class
@@ -80,6 +80,19 @@ class GeneralUtility {
 		$GLOBALS['TSFE']->settingLocale();
 
 		return $GLOBALS['TSFE'];
+	}
+
+	/**
+	 * Get page renderer
+	 *
+	 * @return \TYPO3\CMS\Core\Page\PageRenderer
+	 */
+	public static function getPageRenderer() {
+		if (version_compare(TYPO3_branch, '8.0', '>=')) {
+			return CoreGeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Page\\PageRenderer');
+		} else {
+			self::getTsFe()->getPageRenderer();
+		}
 	}
 
 }
