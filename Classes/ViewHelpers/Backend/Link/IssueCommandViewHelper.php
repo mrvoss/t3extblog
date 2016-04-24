@@ -65,7 +65,11 @@ class IssueCommandViewHelper extends AbstractTagBasedViewHelper {
 			$documentTemplate = GeneralUtility::makeInstance('TYPO3\\CMS\\Backend\\Template\\DocumentTemplate');
 			$href = $documentTemplate->issueCommand('&' . $parameters, $redirectUrl);
 		} else {
-			$href = BackendUtility::getLinkToDataHandlerAction('&' . $parameters, $redirectUrl);
+			// @todo Check if this works for 7.x (and probably 6.x)
+			if (version_compare(TYPO3_branch, '8.0', '>=')) {
+				$parameters = '&id=' . intval(GeneralUtility::_GP('id')) . '&' . $parameters;
+			}
+			$href = BackendUtility::getLinkToDataHandlerAction($parameters, $redirectUrl);
 		}
 
 		$this->tag->addAttribute('href', $href);
