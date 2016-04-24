@@ -63,9 +63,7 @@ class FlashMessagesViewHelper extends BaseFlashMessagesViewHelper {
 	}
 
 	/**
-	 * Initialize arguments
-	 *
-	 * @return void
+	 * @inheritdoc
 	 */
 	public function initializeArguments() {
 		parent::initializeArguments();
@@ -74,6 +72,9 @@ class FlashMessagesViewHelper extends BaseFlashMessagesViewHelper {
 		if (version_compare(TYPO3_branch, '7.0', '<')) {
 			// Add default Bootstrap alert classes for older TYPO3
 			$this->overrideArgument('class', 'string', 'CSS class(es) for this element', FALSE, 'alert alert-block');
+		} else {
+			// Add render mode var for newer TYPO3 versions
+			$this->registerArgument('renderMode', 'string', 'Ignored as removed in newer TYPO3 versions', FALSE, NULL);
 		}
 
 		// Register role attribute for better a11y
@@ -86,12 +87,21 @@ class FlashMessagesViewHelper extends BaseFlashMessagesViewHelper {
 	 * from being cached.
 	 *
 	 * @see \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::no_cache
-	 * @param string $renderMode @deprecated since TYPO3 CMS 7.3. If you need custom output, use <f:flashMessages as="messages"><f:for each="messages" as="message">...</f:for></f:flashMessages>
 	 * @param string $as The name of the current flashMessage variable for rendering inside
 	 * @return string rendered Flash Messages, if there are any.
 	 * @api
 	 */
-	public function render($renderMode = null, $as = null) {
+	public function render($as = null) {
+		// TYPO3 8.x
+		if (version_compare(TYPO3_branch, '8.0', '>=')) {
+			if (($result = parent::render($as)) !== '') {
+				$this->preventCaching();
+			}
+
+			return $result;
+		}
+
+		$renderMode = $this->arguments['renderMode'];
 		// Add defaults here as we need keep signature intact
 		// @todo Remove this when dropping 6.2 support
 		// @todo Test this in 6.2!
@@ -100,16 +110,9 @@ class FlashMessagesViewHelper extends BaseFlashMessagesViewHelper {
 		}
 
 		// TYPO3 7.x
-		// @todo Use this only when 6.2 is no longer relevant
 		if (version_compare(TYPO3_branch, '7.0', '>=')) {
-			$result = parent::render($renderMode, $as);
-
-			// Prevent caching if a flash message is displayed
-			// @todo Remove this! See https://github.com/fnagel/t3extblog/issues/112
-			if ($result !== '') {
-				if (isset($GLOBALS['TSFE']) && $this->contentObject->getUserObjectType() === ContentObjectRenderer::OBJECTTYPE_USER) {
-					$GLOBALS['TSFE']->no_cache = 1;
-				}
+			if (($result = parent::render($renderMode, $as)) !== '') {
+				$this->preventCaching();
 			}
 
 			return $result;
@@ -130,6 +133,19 @@ class FlashMessagesViewHelper extends BaseFlashMessagesViewHelper {
 		}
 
 		return parent::render($renderMode);
+	}
+
+	/**
+	 * Prevent caching if a flash message is displayed
+	 *
+	 * @todo Remove this! See https://github.com/fnagel/t3extblog/issues/112
+	 *
+	 * @return void
+	 */
+	protected function preventCaching() {
+		if (isset($GLOBALS['TSFE']) && $this->contentObject->getUserObjectType() === ContentObjectRenderer::OBJECTTYPE_USER) {
+			$GLOBALS['TSFE']->no_cache = TRUE;
+		}
 	}
 
 	/**
