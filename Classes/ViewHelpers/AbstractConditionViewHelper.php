@@ -26,32 +26,28 @@ namespace TYPO3\T3extblog\ViewHelpers;
  ***************************************************************/
 
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper as BaseAbstractConditionViewHelper;
+use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
+use TYPO3Fluid\Fluid\Core\Compiler\TemplateCompiler;
 
 /**
  * Base for condition VH
  *
- * Includes caching fixes for 7.x while maintaining 6.x compaability
+ * Includes caching fixes for 7.x while maintaining 6.x compatibility
  */
 class AbstractConditionViewHelper extends BaseAbstractConditionViewHelper {
 
 	/**
-	 * Render children if version matches
-	 *
-	 * Use then / else VH inside if needed.
-	 *
-	 * @todo Remove this when 6.2 is no longer needed
-	 *
-	 * See https://github.com/fnagel/t3extblog/pull/73 for more info
-	 *
-	 * @return string
+	 * @inheritdoc
+	 */
+	public function initializeArguments() {
+		$this->registerArgument('then', 'mixed', 'Value to be returned if the condition if met.', FALSE);
+		$this->registerArgument('else', 'mixed', 'Value to be returned if the condition if not met.', FALSE);
+	}
+
+	/**
+	 * @return mixed
 	 */
 	public function render() {
-		// TYPO3 7.x
-		if (is_callable('parent::render')) {
-			return parent::render();
-		}
-
-		// TYPO3 6.x
 		if (static::evaluateCondition($this->arguments)) {
 			return $this->renderThenChild();
 		} else {
@@ -60,32 +56,23 @@ class AbstractConditionViewHelper extends BaseAbstractConditionViewHelper {
 	}
 
 	/**
-	 * The compiled ViewHelper adds two new ViewHelper arguments: __thenClosure and __elseClosure.
-	 * These contain closures which are be executed to render the then(), respectively else() case.
+	 * Disable caching
 	 *
-	 * @param string $argumentsVariableName
-	 * @param string $renderChildrenClosureVariableName
-	 * @param string $initializationPhpCode
-	 * @param \TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\AbstractNode $syntaxTreeNode
-	 * @param \TYPO3\CMS\Fluid\Core\Compiler\TemplateCompiler $templateCompiler
-	 * @return string
-	 * @internal
+	 * @inheritdoc
 	 */
 	public function compile(
-		$argumentsVariableName,
-		$renderChildrenClosureVariableName,
+		$argumentsName,
+		$closureName,
 		&$initializationPhpCode,
-		\TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\AbstractNode $syntaxTreeNode,
-		\TYPO3\CMS\Fluid\Core\Compiler\TemplateCompiler $templateCompiler
+		ViewHelperNode $node,
+		TemplateCompiler $compiler
 	) {
-		parent::compile(
-			$argumentsVariableName,
-			$renderChildrenClosureVariableName,
-			$initializationPhpCode,
-			$syntaxTreeNode,
-			$templateCompiler
-		);
+		if (version_compare(TYPO3_branch, '8.0', '>=')) {
+			$compiler->disable();
+		} else {
+			parent::compile($argumentsName, $closureName, $initializationPhpCode, $node, $compiler);
+		}
 
-		return \TYPO3\CMS\Fluid\Core\Compiler\TemplateCompiler::SHOULD_GENERATE_VIEWHELPER_INVOCATION;
+		return $compiler::SHOULD_GENERATE_VIEWHELPER_INVOCATION;
 	}
 }
