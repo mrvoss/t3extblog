@@ -159,7 +159,8 @@ class SettingsService {
 	 * Without the generation of the TS is based upon the next root page (default
 	 * extbase behaviour) and repositories won't work as expected.
 	 *
-	 * @todo Seems no longer functional for TYPO3 8.0, fixed by using GET paramater in BE templates
+	 * @todo Seems no longer functional for TYPO3 8.0 as BE config manager is called before this
+	 *      Fixed by using GET parameter in BE templates and BE configuration manager hack
 	 * @todo Does template change work for < v8 versions too?
 	 *
 	 * @param $pageUid
