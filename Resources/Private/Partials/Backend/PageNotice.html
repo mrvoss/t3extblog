@@ -1,24 +1,33 @@
-<div xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+<div xmlns:t3b="http://typo3.org/ns/TYPO3/T3extblog/ViewHelpers/Frontend" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
 
 <f:if condition="{data.show}">
-	<div class="typo3-messages">
-		<div class="typo3-message message-warning">
-			<div class="message-header">
-				<f:translate key="module.message.pageNotice.title" />
-			</div>
-			<div class="message-body">
-				<p>
-					<f:translate key="module.message.pageNotice" />
-					<f:for each="{data.pages}" as="page" iteration="iterator">
-						<f:link.page additionalParams="{id: page.uid}">
-							{page.title}
-						</f:link.page>
-						<f:if condition="{iterator.cycle} < {iterator.total}">,</f:if>
-					</f:for>
-				</p>
-			</div>
-		</div>
-	</div>
+	<t3b:typo3Version version="8.0" operator="<">
+		<f:then>
+			<f:render partial="Backend/AlertHelper" arguments="{
+				title: '{f:translate(key: \'module.message.pageNotice.title\')}',
+				content: '{f:render(section: \'content\', arguments: \'{_all}\')}',
+				class: 'message-warning'
+			}" />
+		</f:then>
+		<f:else>
+			<f:render partial="Backend/AlertHelper" arguments="{
+				title: '{f:translate(key: \'module.message.pageNotice.title\')}',
+				content: '{f:render(section: \'content\', arguments: \'{_all}\')}',
+				class: 'alert-danger'
+			}" />
+		</f:else>
+	</t3b:typo3Version>
 </f:if>
+
+<f:section name="content">
+	<f:translate key="module.message.pageNotice" />
+
+	<f:for each="{data.pages}" as="page" iteration="iterator">
+		<f:link.page additionalParams="{id: page.uid}">
+			{page.title}
+		</f:link.page>
+		<f:if condition="{iterator.cycle} < {iterator.total}">,</f:if>
+	</f:for>
+</f:section>
 
 </div>
