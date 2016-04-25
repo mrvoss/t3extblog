@@ -1,20 +1,22 @@
-<div xmlns:t3b="http://typo3.org/ns/TYPO3/T3extblog/ViewHelpers/Frontend" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+<div xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
 
 <f:if condition="{pendingComments}">
-	<t3b:typo3Version version="8.0" operator="<">
+	<f:comment>@todo Remove this when 6.2 is no longer relevant</f:comment>
+	<t3b:typo3Version version="7.2" operator="<">
 		<f:then>
-			<f:render partial="Backend/AlertHelper" arguments="{
-				title: '{f:translate(key: \'module.message.pendingComments.title\')}',
-				content: '{f:render(section: \'content\', arguments: \'{_all}\')}',
-				class: 'message-information'
-			}" />
+			<div class="typo3-messages">
+				<div class="typo3-message message-information">
+					<div class="message-header"><f:translate key="module.message.pendingComments.title" /></div>
+					<div class="message-body">
+						<f:render section="content" arguments="{_all}" />
+					</div>
+				</div>
+			</div>
 		</f:then>
 		<f:else>
-			<f:render partial="Backend/AlertHelper" arguments="{
-				title: '{f:translate(key: \'module.message.pendingComments.title\')}',
-				content: '{f:render(section: \'content\', arguments: \'{_all}\')}',
-				class: 'alert-info'
-			}" />
+			<f:be.infobox title="{f:translate(key: 'module.message.pendingComments.title')}" state="-1">
+				<f:render section="content" arguments="{_all}" />
+			</f:be.infobox>
 		</f:else>
 	</t3b:typo3Version>
 </f:if>
