@@ -72,13 +72,7 @@ class FlashMessagesViewHelper extends BaseFlashMessagesViewHelper {
 		if (version_compare(TYPO3_branch, '7.0', '<')) {
 			// Add default Bootstrap alert classes for older TYPO3
 			$this->overrideArgument('class', 'string', 'CSS class(es) for this element', FALSE, 'alert alert-block');
-		} else {
-			// Add render mode var for newer TYPO3 versions
-			$this->registerArgument('renderMode', 'string', 'Ignored as removed in newer TYPO3 versions', FALSE, NULL);
 		}
-
-		// Register role attribute for better a11y
-		$this->registerArgument('role', 'string', 'ARIA role for this element', FALSE, 'alert');
 	}
 
 	/**
@@ -87,11 +81,12 @@ class FlashMessagesViewHelper extends BaseFlashMessagesViewHelper {
 	 * from being cached.
 	 *
 	 * @see \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::no_cache
+	 * @param string $renderMode @deprecated since TYPO3 CMS 7.3. If you need custom output, use <f:flashMessages as="messages"><f:for each="messages" as="message">...</f:for></f:flashMessages>
 	 * @param string $as The name of the current flashMessage variable for rendering inside
 	 * @return string rendered Flash Messages, if there are any.
 	 * @api
 	 */
-	public function render($as = null) {
+	public function render($renderMode = null, $as = null) {
 		// TYPO3 8.x
 		if (version_compare(TYPO3_branch, '8.0', '>=')) {
 			if (($result = parent::render($as)) !== '') {
@@ -100,8 +95,7 @@ class FlashMessagesViewHelper extends BaseFlashMessagesViewHelper {
 
 			return $result;
 		}
-
-		$renderMode = $this->arguments['renderMode'];
+		
 		// Add defaults here as we need keep signature intact
 		// @todo Remove this when dropping 6.2 support
 		// @todo Test this in 6.2!

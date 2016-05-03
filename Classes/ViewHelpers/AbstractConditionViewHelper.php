@@ -26,26 +26,46 @@ namespace TYPO3\T3extblog\ViewHelpers;
  ***************************************************************/
 
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper as BaseAbstractConditionViewHelper;
-use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
-use TYPO3Fluid\Fluid\Core\Compiler\TemplateCompiler;
 
 /**
  * Base for condition VH
  *
- * Includes caching fixes for 7.x while maintaining 6.x compatibility
+ * Includes caching fixes for 7.x & 8.x while maintaining 6.x compatibility
  */
 class AbstractConditionViewHelper extends BaseAbstractConditionViewHelper {
 
 	/**
+	 *
 	 * @inheritdoc
 	 */
-	public function initializeArguments() {
-		$this->registerArgument('then', 'mixed', 'Value to be returned if the condition if met.', FALSE);
-		$this->registerArgument('else', 'mixed', 'Value to be returned if the condition if not met.', FALSE);
+	public function __construct() {
+		// @todo Remove parent call when 7.6 is no longer relevant
+		if (is_callable('parent::__construct')) {
+			parent::__construct();
+		}
+
+		// @todo Remove this when 6.2 is no longer relevant
+		if (version_compare(TYPO3_branch, '7.0', '<')) {
+			$this->initializeArguments();
+		}
 	}
 
 	/**
-	 * @return mixed
+	 * @todo Remove this when 6.2 is no longer relevant
+	 *
+	 * @inheritdoc
+	 */
+	public function initializeArguments() {
+		// @todo Remove this when 6.2 is no longer relevant
+		if (version_compare(TYPO3_branch, '7.0', '>=')) {
+			parent::initializeArguments();
+		}
+	}
+
+	/**
+	 * @todo Remove this when 6.2 is no longer relevant
+	 *
+	 * @inheritdoc
 	 */
 	public function render() {
 		if (static::evaluateCondition($this->arguments)) {
@@ -56,23 +76,25 @@ class AbstractConditionViewHelper extends BaseAbstractConditionViewHelper {
 	}
 
 	/**
-	 * Disable caching
+	 * Disable caching for 7.x, not called in 6.x
 	 *
 	 * @inheritdoc
 	 */
 	public function compile(
-		$argumentsName,
-		$closureName,
+		$argumentsVariableName,
+		$renderChildrenClosureVariableName,
 		&$initializationPhpCode,
-		ViewHelperNode $node,
-		TemplateCompiler $compiler
+		\TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\AbstractNode $syntaxTreeNode,
+		\TYPO3\CMS\Fluid\Core\Compiler\TemplateCompiler $templateCompiler
 	) {
-		if (version_compare(TYPO3_branch, '8.0', '>=')) {
-			$compiler->disable();
-		} else {
-			parent::compile($argumentsName, $closureName, $initializationPhpCode, $node, $compiler);
-		}
+		parent::compile(
+			$argumentsVariableName,
+			$renderChildrenClosureVariableName,
+			$initializationPhpCode,
+			$syntaxTreeNode,
+			$templateCompiler
+		);
 
-		return $compiler::SHOULD_GENERATE_VIEWHELPER_INVOCATION;
+		return \TYPO3\CMS\Fluid\Core\Compiler\TemplateCompiler::SHOULD_GENERATE_VIEWHELPER_INVOCATION;
 	}
 }

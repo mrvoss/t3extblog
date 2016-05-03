@@ -40,7 +40,11 @@ class CommentAllowedViewHelper extends AbstractConditionViewHelper {
 	public function initializeArguments() {
 		parent::initializeArguments();
 
-		$this->registerArgument('post', 'TYPO3\\T3extblog\\Domain\\Model\\Post', 'Post object to check if new comments are allowed.', TRUE);
+		$this->registerArgument(
+			'post',
+			'TYPO3\\T3extblog\\Domain\\Model\\Post', 'Post object to check if new comments are allowed.',
+			TRUE
+		);
 	}
 
 	/**

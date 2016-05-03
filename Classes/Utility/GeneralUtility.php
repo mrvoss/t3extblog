@@ -85,13 +85,15 @@ class GeneralUtility {
 	/**
 	 * Get page renderer
 	 *
+	 * @todo Remove this when TYPO3 6.2 is no longer relevant
+	 *
 	 * @return \TYPO3\CMS\Core\Page\PageRenderer
 	 */
 	public static function getPageRenderer() {
 		if (version_compare(TYPO3_branch, '8.0', '>=')) {
 			return CoreGeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Page\\PageRenderer');
 		} else {
-			self::getTsFe()->getPageRenderer();
+			return self::getTsFe()->getPageRenderer();
 		}
 	}
 
