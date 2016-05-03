@@ -1,5 +1,5 @@
 plugin.tx_t3extblog {
-	# Please note: "Email/" is added to each path when
+	# Please note: "Email/" is added to each path
 	view {
 		templateRootPaths.0 = EXT:t3extblog/Resources/Private/Templates/
 		templateRootPaths.10 = {$plugin.tx_t3extblog.view.templateRootPath}
