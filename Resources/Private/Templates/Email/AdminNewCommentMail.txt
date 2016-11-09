@@ -34,8 +34,7 @@ Text:
 <t3b:wordwrap><f:format.stripTags>{comment.text}</f:format.stripTags></t3b:wordwrap>
 
 
-Sie können den Status der Kommentare im TYPO3-Backend bearbeiten:
-{domain}typo3
+Sie können den Status der Kommentare im TYPO3-Backend bearbeiten.
 
 <f:render partial="Email/Footer" arguments="{_all}" />
 </f:section>
