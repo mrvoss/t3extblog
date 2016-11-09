@@ -3,9 +3,7 @@
 <f:layout name="Email" />
 
 <f:section name="main">
-Hello,
-
-a new post has been released on {settings.blogName}:
+Guten Tag, es wurde ein neuer Blog-Beitrag veröffentlicht: {settings.blogName}:
 {post.title}
 
 <t3b:uri.action
@@ -16,10 +14,7 @@ a new post has been released on {settings.blogName}:
 	pageUid="{settings.blogsystem.pid}"
 	absolute="true"
 	arguments="{post.linkParameter}"
-	additionalParams="{L: subscriber.sysLanguageUid}" />
-
-
-You can manage your subscription by using this link:
+	additionalParams="{L: subscriber.sysLanguageUid}" />Sie können Ihr Abonnement über folgenden Link verwalten:
 <t3b:uri.action
 	extensionName="T3extblog"
 	pluginName="SubscriptionManager" 
@@ -30,7 +25,7 @@ You can manage your subscription by using this link:
 	arguments="{code : subscriber.code}"
 	additionalParams="{L: subscriber.sysLanguageUid}" />
 
-This link is valid until: <f:format.date format="d.m.Y - H:i:s">{validUntil}</f:format.date>
+Dieser Link ist gültig bis: <f:format.date format="d.m.Y - H:i:s">{validUntil}</f:format.date>
 
 <f:render partial="Email/Footer" arguments="{_all}" />
 </f:section>

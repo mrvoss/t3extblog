@@ -1,2 +1,2 @@
-Regards
+Mit freundlichen Grüßen
 {settings.blogName}

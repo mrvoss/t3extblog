@@ -3,12 +3,10 @@
 <f:layout name="Email" />
 
 <f:section name="main">
-Hello Admin,
-
-someone added a new comment!
+Hallo Redakteur, es gibt einen neuen Kommentar auf dem {settings.blogName}.
 
 <f:if condition="{comment.valid}">
-	<f:else>The new comment is invalid, please approve or remove it!</f:else>
+	<f:else>Der Kommentar wartet auf Freischaltung oder Löschung! Bitte zeitnah bearbeiten.</f:else>
 </f:if>
 
 Blogname: 	{settings.blogName}
@@ -26,9 +24,8 @@ Link:		<t3b:uri.action
 
 
 Comment
-Title: 		{comment.title}
-Author: 	{comment.author}
-Date: 		<f:format.date format="d.m.Y - H:i:s">{comment.date}</f:format.date>
+Title: 		{comment.title}Kommentator: 	{comment.author}
+Datum: 		<f:format.date format="d.m.Y - H:i:s">{comment.date}</f:format.date>
 Website: 	{comment.website}
 Approved: 	<f:if condition="{comment.approved}"><f:then>yes</f:then><f:else>no</f:else></f:if>
 Spam: 	    <f:if condition="{comment.spam}"><f:then>yes</f:then><f:else>no</f:else></f:if>
@@ -37,7 +34,7 @@ Text:
 <t3b:wordwrap><f:format.stripTags>{comment.text}</f:format.stripTags></t3b:wordwrap>
 
 
-You could manage comments in the TYPO3 backend of your installation:
+Sie können den Status der Kommentare im TYPO3-Backend bearbeiten:
 {domain}typo3
 
 <f:render partial="Email/Footer" arguments="{_all}" />

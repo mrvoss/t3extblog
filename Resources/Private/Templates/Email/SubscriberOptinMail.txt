@@ -3,9 +3,9 @@
 <f:layout name="Email" />
 
 <f:section name="main">
-Hello {subscriber.name},
+Sehr geehrte/r Herr/Frau {subscriber.name},
 
-it seems you subscribed for new comments:
+ vielen Dank für Ihre Anmeldung auf :
 
 Blogname: 	{settings.blogName}
 Blogpost: 	{post.title}
@@ -20,10 +20,10 @@ Link:		<t3b:uri.action
 				additionalParams="{L: post.sysLanguageUid}"
 				section="comment-{comment.uid}" />
 
-Your email: {subscriber.email}
+Ihre Emailadresse lautet: {subscriber.email}
 
 
-Please confirm your subscription by using this link:
+Bitte bestätigen Sie Ihre Anmeldung durch einen Klick auf folgende URL:
 <t3b:uri.action
 	extensionName="T3extblog"
 	pluginName="SubscriptionManager"
@@ -34,7 +34,7 @@ Please confirm your subscription by using this link:
 	arguments="{code: subscriber.code}"
 	additionalParams="{L: post.sysLanguageUid}" />
 
-This link is valid until: <f:format.date format="d.m.Y - H:i:s">{validUntil}</f:format.date>
+Dieser Link ist gültig bis zum: <f:format.date format="d.m.Y - H:i:s">{validUntil}</f:format.date>
 
 <f:render partial="Email/Footer" arguments="{_all}" />
 </f:section>

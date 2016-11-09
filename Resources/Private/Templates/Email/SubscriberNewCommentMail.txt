@@ -3,12 +3,8 @@
 <f:layout name="Email" />
 
 <f:section name="main">
-Hello {subscriber.name},
-
-a new comment was posted on '{post.title}' at {settings.blogName}.
-
-
-See the comment: <t3b:uri.action
+Guten Tag {subscriber.name},
+ ein neuer Kommentar zu '{post.title}' auf {settings.blogName} wurde veröffentlicht. Hier ansehen: <t3b:uri.action
 					extensionName="T3extblog"
 					pluginName="Blogsystem"
 					controller="Post"
@@ -17,9 +13,7 @@ See the comment: <t3b:uri.action
 					absolute="true"
 					arguments="{post.linkParameter}"
 					additionalParams="{L: post.sysLanguageUid}"
-					section="comment-{comment.uid}" />
-
-You can manage your subscription by using this link:
+					section="comment-{comment.uid}" />Sie können Ihr Abonnement über folgenden Link verwalten:
 <t3b:uri.action
 	extensionName="T3extblog"
 	pluginName="SubscriptionManager"
@@ -30,7 +24,7 @@ You can manage your subscription by using this link:
 	arguments="{code : subscriber.code}"
 	additionalParams="{L: post.sysLanguageUid}" />
 
-This link is valid until: <f:format.date format="d.m.Y - H:i:s">{validUntil}</f:format.date>
+Dieser Link ist gültig bis: <f:format.date format="d.m.Y - H:i:s">{validUntil}</f:format.date>
 
 <f:render partial="Email/Footer" arguments="{_all}" />
 </f:section>
