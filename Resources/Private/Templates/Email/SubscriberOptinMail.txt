@@ -17,7 +17,7 @@ Link:		<t3b:uri.action
 				pageUid="{settings.blogsystem.pid}"
 				absolute="true"
 				arguments="{post.linkParameter}"
-				additionalParams="{L: post.sysLanguageUid}"
+				additionalParams="{L: 2}"
 				section="comment-{comment.uid}" />
 
 Ihre Emailadresse lautet: {subscriber.email}
@@ -32,7 +32,7 @@ Bitte bestätigen Sie Ihre Anmeldung durch einen Klick auf folgende URL:
 	pageUid="{settings.subscriptionManager.pid}"
 	absolute="true"
 	arguments="{code: subscriber.code}"
-	additionalParams="{L: post.sysLanguageUid}" />
+	additionalParams="{L: 2}" />
 
 Dieser Link ist gültig bis zum: <f:format.date format="d.m.Y - H:i:s">{validUntil}</f:format.date>
 

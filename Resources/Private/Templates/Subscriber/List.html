@@ -52,6 +52,8 @@
 
 		<tbody>
 		<f:for each="{postSubscriber}" as="subscriber">
+			<f:comment>Workaround for https://github.com/fnagel/t3extblog/issues/154#issuecomment-259964142</f:comment>
+			<f:if condition="{subscriber.post}">
 			<tr>
 				<td>
 					<f:link.action
@@ -75,6 +77,7 @@
 					</f:link.action>
 				</td>
 			</tr>
+			</f:if>
 		</f:for>
 		</tbody>
 	</table>
