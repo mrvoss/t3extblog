@@ -3,7 +3,9 @@
 <f:layout name="Email" />
 
 <f:section name="main">
-Guten Tag, es wurde ein neuer Blog-Beitrag veröffentlicht: {settings.blogName}:
+Guten Tag,
+
+es wurde ein neuer Blog-Beitrag veröffentlicht: {settings.blogName}:
 {post.title}
 
 <t3b:uri.action
@@ -14,7 +16,9 @@ Guten Tag, es wurde ein neuer Blog-Beitrag veröffentlicht: {settings.blogName}:
 	pageUid="{settings.blogsystem.pid}"
 	absolute="true"
 	arguments="{post.linkParameter}"
-	additionalParams="{L: subscriber.sysLanguageUid}" />Sie können Ihr Abonnement über folgenden Link verwalten:
+	additionalParams="{L: subscriber.sysLanguageUid}" />
+
+Sie können Ihr Abonnement über folgenden Link verwalten:
 <t3b:uri.action
 	extensionName="T3extblog"
 	pluginName="SubscriptionManager" 

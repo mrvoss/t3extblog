@@ -4,7 +4,10 @@
 
 <f:section name="main">
 Guten Tag {subscriber.name},
- ein neuer Kommentar zu '{post.title}' auf {settings.blogName} wurde veröffentlicht. Hier ansehen: <t3b:uri.action
+
+ein neuer Kommentar zu '{post.title}' auf {settings.blogName} wurde veröffentlicht.
+
+Hier ansehen: <t3b:uri.action
 					extensionName="T3extblog"
 					pluginName="Blogsystem"
 					controller="Post"
@@ -13,7 +16,9 @@ Guten Tag {subscriber.name},
 					absolute="true"
 					arguments="{post.linkParameter}"
 					additionalParams="{L: post.sysLanguageUid}"
-					section="comment-{comment.uid}" />Sie können Ihr Abonnement über folgenden Link verwalten:
+					section="comment-{comment.uid}" />
+
+Sie können Ihr Abonnement über folgenden Link verwalten:
 <t3b:uri.action
 	extensionName="T3extblog"
 	pluginName="SubscriptionManager"
